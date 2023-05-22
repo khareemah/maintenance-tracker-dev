@@ -37,7 +37,9 @@ app.use(express.json());
 app.use(cookieParser(process.env.JWT_SECRET));
 app.get('/', (req, res) => {
   res.send(
-    res.send('<h1>E-commerce API</h1><a href="/api-docs">Documentation</a>')
+    res.send(
+      '<h1>Maintenance Tracker</h1><a href="/api-docs">Documentation</a>'
+    )
   );
 });
 app.use('/api-docs', swaggerUI.serve, swaggerUI.setup(swaggerDocument));
