@@ -1,0 +1,408 @@
+openapi: 3.0.0
+info:
+  title: Maintenance-Tracker
+  contact: {}
+  version: '1.0'
+servers:
+  - url: localhost:5000/api/v1
+    variables: {}
+paths:
+  /auth/register:
+    post:
+      tags:
+        - Auth
+      summary: register
+      operationId: register
+      parameters: []
+      requestBody:
+        description: ''
+        content:
+          application/json:
+            schema:
+              allOf:
+                - $ref: '#/components/schemas/registerrequest'
+                - example:
+                    name: kareemah
+                    email: kareemah4netlify@gmail.com
+                    password: secret
+            example:
+              name: kareemah
+              email: kareemah4netlify@gmail.com
+              password: secret
+        required: true
+      responses:
+        '200':
+          description: ''
+          headers: {}
+      deprecated: false
+  /auth/verify-email:
+    post:
+      tags:
+        - Auth
+      summary: verify email
+      operationId: verifyemail
+      parameters: []
+      requestBody:
+        description: ''
+        content:
+          application/json:
+            schema:
+              allOf:
+                - $ref: '#/components/schemas/verifyemailrequest'
+                - example:
+                    verificationToken: ecce14efbe393330963030599c1199022581f686d837749a765907dde2976d6c5aba7e9ff3fbb305
+                    email: kareemah4netlify@gmail.com
+            example:
+              verificationToken: ecce14efbe393330963030599c1199022581f686d837749a765907dde2976d6c5aba7e9ff3fbb305
+              email: kareemah4netlify@gmail.com
+        required: true
+      responses:
+        '200':
+          description: ''
+          headers: {}
+      deprecated: false
+  /auth/login:
+    post:
+      tags:
+        - Auth
+      summary: login
+      operationId: login
+      parameters: []
+      requestBody:
+        description: ''
+        content:
+          application/json:
+            schema:
+              allOf:
+                - $ref: '#/components/schemas/loginrequest'
+                - example:
+                    email: kareemah4netlify@gmail.com
+                    password: secret
+            example:
+              email: kareemah4netlify@gmail.com
+              password: secret
+        required: true
+      responses:
+        '200':
+          description: ''
+          headers: {}
+      deprecated: false
+  /auth/logout:
+    delete:
+      tags:
+        - Auth
+      summary: logout
+      operationId: logout
+      parameters: []
+      responses:
+        '200':
+          description: ''
+          headers: {}
+      deprecated: false
+  /auth/forgot-password:
+    post:
+      tags:
+        - Auth
+      summary: forgot password
+      operationId: forgotpassword
+      parameters: []
+      requestBody:
+        description: ''
+        content:
+          application/json:
+            schema:
+              allOf:
+                - $ref: '#/components/schemas/forgotpasswordrequest'
+                - example:
+                    email: kareemah4netlify@gmail.com
+            example:
+              email: kareemah4netlify@gmail.com
+        required: true
+      responses:
+        '200':
+          description: ''
+          headers: {}
+      deprecated: false
+  /auth/reset-password:
+    post:
+      tags:
+        - Auth
+      summary: reset password
+      operationId: resetpassword
+      parameters: []
+      requestBody:
+        description: ''
+        content:
+          application/json:
+            schema:
+              allOf:
+                - $ref: '#/components/schemas/resetpasswordrequest'
+                - example:
+                    token: 71407960516721fcfad27e5cd6614030
+                    email: kareemah4netlify@gmail.com
+                    password: secret
+            example:
+              token: 71407960516721fcfad27e5cd6614030
+              email: kareemah4netlify@gmail.com
+              password: secret
+        required: true
+      responses:
+        '200':
+          description: ''
+          headers: {}
+      deprecated: false
+  /users/requests:
+    post:
+      tags:
+        - User Request
+      summary: create request
+      operationId: createrequest
+      parameters: []
+      requestBody:
+        description: ''
+        content:
+          application/json:
+            schema:
+              allOf:
+                - $ref: '#/components/schemas/createrequestrequest'
+                - example:
+                    requestType: maintenance
+            example:
+              requestType: maintenance
+        required: true
+      responses:
+        '200':
+          description: ''
+          headers: {}
+      deprecated: false
+    get:
+      tags:
+        - User Request
+      summary: Fetch all the requests of a logged in user
+      operationId: Fetchalltherequestsofaloggedinuser
+      parameters: []
+      responses:
+        '200':
+          description: ''
+          headers: {}
+      deprecated: false
+  /users/request/{id}:
+    parameters:
+      - in: path
+        name: id
+        schema:
+          type: string
+        required: true
+        description: the request id
+    get:
+      tags:
+        - User Request
+      summary: Fetch a request that belongs to a logged in user
+      operationId: Fetcharequestthatbelongstoaloggedinuser
+      parameters: []
+      responses:
+        '200':
+          description: ''
+          headers: {}
+      deprecated: false
+    put:
+      tags:
+        - User Request
+      summary: modify request
+      operationId: modifyrequest
+      parameters: []
+      requestBody:
+        description: ''
+        content:
+          application/json:
+            schema:
+              allOf:
+                - $ref: '#/components/schemas/modifyrequestrequest'
+                - example:
+                    requestType: repair
+            example:
+              requestType: repair
+        required: true
+      responses:
+        '200':
+          description: ''
+          headers: {}
+      deprecated: false
+  /requests:
+    get:
+      tags:
+        - Admin Request
+      summary: get all requests
+      operationId: getallrequests
+      parameters:
+        - name: requestStatus
+          in: query
+          description: ''
+          required: true
+          style: form
+          explode: true
+          schema:
+            type: string
+            example: pending
+      responses:
+        '200':
+          description: ''
+          headers: {}
+      deprecated: false
+  /requests/{id}/disapprove:
+    parameters:
+      - in: path
+        name: id
+        schema:
+          type: string
+        required: true
+        description: the request id
+    put:
+      tags:
+        - Admin Request
+      summary: dissaprove request
+      operationId: dissaproverequest
+      parameters: []
+      responses:
+        '200':
+          description: ''
+          headers: {}
+      deprecated: false
+  /requests/{id}/approve:
+    parameters:
+      - in: path
+        name: id
+        schema:
+          type: string
+        required: true
+        description: the request id
+    put:
+      tags:
+        - Admin Request
+      summary: approve request
+      operationId: approverequest
+      parameters: []
+      responses:
+        '200':
+          description: ''
+          headers: {}
+      deprecated: false
+  /requests/{id}/resolve:
+    parameters:
+      - in: path
+        name: id
+        schema:
+          type: string
+        required: true
+        description: the request id
+    put:
+      tags:
+        - Admin Request
+      summary: resolve request
+      operationId: resolverequest
+      parameters: []
+      responses:
+        '200':
+          description: ''
+          headers: {}
+      deprecated: false
+components:
+  schemas:
+    registerrequest:
+      title: registerrequest
+      required:
+        - name
+        - email
+        - password
+      type: object
+      properties:
+        name:
+          type: string
+        email:
+          type: string
+        password:
+          type: string
+      example:
+        name: kareemah
+        email: kareemah4netlify@gmail.com
+        password: secret
+    verifyemailrequest:
+      title: verifyemailrequest
+      required:
+        - verificationToken
+        - email
+      type: object
+      properties:
+        verificationToken:
+          type: string
+        email:
+          type: string
+      example:
+        verificationToken: ecce14efbe393330963030599c1199022581f686d837749a765907dde2976d6c5aba7e9ff3fbb305
+        email: kareemah4netlify@gmail.com
+    loginrequest:
+      title: loginrequest
+      required:
+        - email
+        - password
+      type: object
+      properties:
+        email:
+          type: string
+        password:
+          type: string
+      example:
+        email: kareemah4netlify@gmail.com
+        password: secret
+    forgotpasswordrequest:
+      title: forgotpasswordrequest
+      required:
+        - email
+      type: object
+      properties:
+        email:
+          type: string
+      example:
+        email: kareemah4netlify@gmail.com
+    resetpasswordrequest:
+      title: resetpasswordrequest
+      required:
+        - token
+        - email
+        - password
+      type: object
+      properties:
+        token:
+          type: string
+        email:
+          type: string
+        password:
+          type: string
+      example:
+        token: 71407960516721fcfad27e5cd6614030
+        email: kareemah4netlify@gmail.com
+        password: secret
+    createrequestrequest:
+      title: createrequestrequest
+      required:
+        - requestType
+      type: object
+      properties:
+        requestType:
+          type: string
+      example:
+        requestType: maintenance
+    modifyrequestrequest:
+      title: modifyrequestrequest
+      required:
+        - requestType
+      type: object
+      properties:
+        requestType:
+          type: string
+      example:
+        requestType: repair
+tags:
+  - name: Auth
+  - name: User Request
+  - name: Admin Request
